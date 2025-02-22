@@ -35,7 +35,8 @@ app.get('/bus-time/:busLine/:stopId', async (req, res) => {
     // res.send(arrivals)
     if (arrivals && arrivals.length > 0) {
       const nextBus = arrivals[0].MonitoredVehicleJourney.MonitoredCall.AimedDepartureTime;
-      res.send(`The next ${busLine} bus at stop ${stopId} is expected to departgit at ${new Date(nextBus).toLocaleTimeString()}.`);
+      const easternTime = new Date(nextBus).toLocaleString('en-US', { timeZone: 'America/New_York', hour: 'numeric', minute: 'numeric', hour12: true });
+      res.send(`The next ${busLine} bus at stop ${stopId} is expected to depart at ${easternTime}.`);
     } else {
       res.send(`I'm sorry, but I couldn't find any upcoming ${busLine} buses at stop ${stopId}.`);
     }
